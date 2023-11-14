@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import {UseChat} from "../context/ChatContext.tsx";
+import {UseChat} from "../context/AuthContext.tsx";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import {db} from "../firebase.ts";
 import {IoSend} from "react-icons/io5";

@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import {Navigate} from "react-router-dom";
-import {UseChat} from "../context/ChatContext.tsx";
+import {UseChat} from "../context/AuthContext.tsx";
 
 type privateRouteprops = {
     children : ReactNode

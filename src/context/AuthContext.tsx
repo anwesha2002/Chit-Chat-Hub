@@ -21,13 +21,13 @@ type chatContextProps = {
     signOut : () => Promise<void>
 }
 
-const chatContext = createContext({} as chatContextProps);
+const authContext = createContext({} as chatContextProps);
 
 export function UseChat(){
-    return useContext(chatContext)
+    return useContext(authContext)
 }
 
-export function ChatContextprovider({children} : ChatContextproviderProps){
+export function AuthContextprovider({children} : ChatContextproviderProps){
     const [currentUser, setCurrentUser] = useState<ChatMember | User | null >(null)
     const [loading, setLoading] = useState(true)
     function signInWithGoogle(){
@@ -51,9 +51,9 @@ export function ChatContextprovider({children} : ChatContextproviderProps){
     },[])
 
     return(
-        <chatContext.Provider value={{currentUser, signInWithGoogle, signOut}}>
+        <authContext.Provider value={{currentUser, signInWithGoogle, signOut}}>
 
             {!loading && children}
-        </chatContext.Provider>
+        </authContext.Provider>
     )
 }

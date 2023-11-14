@@ -1,10 +1,10 @@
-import {ChatBox} from "../component/ChatBox.tsx";
+//import {ChatBox} from "../component/ChatBox.tsx";
 import {SendMessage} from "../component/SendMessage.tsx";
 
 export function Chatroom(){
     return(
         <>
-            <div ><ChatBox/></div>
+            {/*<div><ChatBox/></div>*/}
             <SendMessage/>
         </>
     )

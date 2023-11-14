@@ -1,40 +1,45 @@
-import {Message} from "./Message.tsx";
+/*import {Message} from "./Message.tsx";
 import { useEffect, useRef, useState} from "react";
-import {query ,  onSnapshot, collection, orderBy} from 'firebase/firestore'
+import {query, onSnapshot, collection, orderBy, doc} from 'firebase/firestore'
 import {db } from "../firebase.ts";
 import {ChatMember} from "../model/ChatMember.ts";
 import firebase from "firebase/compat/app"
 import DocumentData = firebase.firestore.DocumentData;
+import {UseChatRoom} from "../context/ChatRoomContext.tsx";
 
 export function ChatBox(){
-    const [message, setMessage] = useState<DocumentData[] |  ChatMember[]>([])
+    const { message } = UseChatRoom()
+    /*const [messages, setMessages] = useState<DocumentData[] |  ChatMember[]>([])
     const chatCollectionRef = query(
-        collection(db,"messages"),
-        orderBy("createdAt")
-        );
-    const messageRef  = useRef<HTMLDivElement>(null)
+        doc(collection(db,"message","messages"),)
+        //orderBy("createdAt")
+        );*/
+    /*const messageRef  = useRef<HTMLDivElement>(null)
 
     const scrollToBottom = () => {
-        messageRef?.current?.scrollIntoView({behavior : "smooth"})
+        messageRef.current?.scrollIntoView({behavior : "smooth"})
     }
 
     useEffect(() => {
         scrollToBottom()
     }, [message]);
 
-    useEffect(() => {
+    //console.log("message", message)
+
+   /* useEffect(() => {
         const unsubscribe = onSnapshot(chatCollectionRef,(querySnapShot) => {
             const messages: DocumentData[] = [];
             querySnapShot.docs.map((doc)=>(
                 messages.push({ ...doc.data()})
             ));
-            setMessage(messages);
+            setMessages(messages);
         })
         return unsubscribe;
     }, []);
 
+    console.log(message)*/
 
-    return(
+    /*return(
         <>
             <div className="mb-28 mt-16">
                 {message.map(message=>(
@@ -44,4 +49,4 @@ export function ChatBox(){
             </div>
         </>
     )
-}
+}*/

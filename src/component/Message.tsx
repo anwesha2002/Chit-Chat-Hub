@@ -1,5 +1,5 @@
 import {ChatMember} from "../model/ChatMember.ts";
-import {UseChat} from "../context/ChatContext.tsx";
+import {UseChat} from "../context/AuthContext.tsx";
 import firebase from "firebase/compat/app";
 import DocumentData = firebase.firestore.DocumentData;
 import {FormatDate} from "../Util/DateFormat.tsx";
@@ -24,7 +24,7 @@ export function Message({message}: messgeProps){
                     </div>
                     <div className="chat-bubble chat-bubble-primary">{message.text}</div>
                     <div className="chat-footer opacity-50">
-                        {FormatDate(message.createdAt)}
+                        {/*{FormatDate(message.createdAt)}*/}
                     </div>
                 </div>
             }

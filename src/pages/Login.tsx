@@ -1,4 +1,4 @@
-import {UseChat} from "../context/ChatContext.tsx";
+import {UseChat} from "../context/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 
@@ -17,7 +17,7 @@ export function Login(){
 
     useEffect(() => {
         if(currentUser){
-            navigate("/chat")
+            navigate("/room")
         }
     }, [currentUser]);
 
