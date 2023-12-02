@@ -60,7 +60,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                     //setId(docRef.id);
                     setDoc(doc(db,"message",`${docRef.id}`),{})
                     joinGroup(docRef.id)
-                    setRoom(room=> [...room,docRef])
                     // const message = collection(db,"message")
                     // doc(message,`${docRef.id}`).set({})
                 })

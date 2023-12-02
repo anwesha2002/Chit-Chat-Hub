@@ -3,8 +3,10 @@ import {Link} from 'react-router-dom'
 import {RoomType} from "../model/room.ts";
 import {UseRoom} from "../context/RoomsProvider.tsx";
 import { IoTrash} from "react-icons/io5";
+import firebase from "firebase/compat/app";
+import DocumentData = firebase.firestore.DocumentData;
 
-export function Room({id , room_name, createdBy} : RoomType){
+export function Room({id , room_name, createdBy} : RoomType | DocumentData){
     const { deleteGroup } = UseRoom()
 
     function handleDelete(id : string){
