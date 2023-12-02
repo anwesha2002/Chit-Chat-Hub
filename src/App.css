@@ -1,5 +1,28 @@
 *{
     overflow-x: hidden;
     box-sizing: border-box;
+}
+#chatgroup{
+    transition: transform 0.8s;
+}
 
+#chatgroup:hover{
+    transform: translateY(-8px) ;
+    background-color: #0190EE;
+}
+.item{
+    width: 150px;
+}
+.item img{
+    height: 120px;
+    width: 120px;
+    border: 2px  dotted;
+    background-color : #ADD8E6;
+    transition: transform 2s;
+}
+.item:hover img{
+    transform: rotateZ(360deg);
+}
+.item img , h5{
+    cursor: pointer;
 }

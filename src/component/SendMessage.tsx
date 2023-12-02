@@ -1,29 +1,18 @@
-import {FormEvent, useState} from "react";
-import {UseChat} from "../context/AuthContext.tsx";
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
-import {db} from "../firebase.ts";
+import {FormEvent } from "react";
 import {IoSend} from "react-icons/io5";
+import {UseSendmessgae} from "../context/SendMessageContext.tsx";
 
 export function SendMessage(){
-    const [value , setValue] = useState("")
-    const { currentUser  } = UseChat();
+    //const [value , setValue] = useState("")
+    const { value, setValue, sendMessage } = UseSendmessgae()
+    //const { currentUser  } = UseChat();
     async function handleSubmit(e : FormEvent<HTMLFormElement>){
         e.preventDefault();
         if(value.trim() === ""){
             alert("type something");
             return;
         }
-        try {
-            await addDoc(collection(db, "messages"), {
-                name: currentUser?.displayName,
-                text: value,
-                avatar: currentUser?.photoURL,
-                createdAt: serverTimestamp(),
-                id : currentUser?.uid
-            })
-        } catch (err) {
-            console.log(err);
-        }
+        sendMessage()
         //console.log(value)
         setValue("")
     }
@@ -35,8 +24,7 @@ export function SendMessage(){
                 <form onSubmit={handleSubmit} className="container flex justify-around">
                     <input value={value} onChange={e => setValue(e.target.value)} className="input w-full focus:outline-none  rounded-r-none" type="text"/>
                     <button type="submit" className="bg-gray-200 w-auto rounded-r-lg text-black flex flex-row justify-center items-center">
-                        <h6 className="m-2">Send</h6>
-                        <IoSend className="me-2"/>
+                        <IoSend className="mx-5 text-xl"/>
                     </button>
                 </form>
             </div>

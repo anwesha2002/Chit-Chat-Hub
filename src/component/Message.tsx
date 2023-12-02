@@ -24,7 +24,7 @@ export function Message({message}: messgeProps){
                     </div>
                     <div className="chat-bubble chat-bubble-primary">{message.text}</div>
                     <div className="chat-footer opacity-50">
-                        {/*{FormatDate(message.createdAt)}*/}
+                        {FormatDate(message.createdAt)}
                     </div>
                 </div>
             }

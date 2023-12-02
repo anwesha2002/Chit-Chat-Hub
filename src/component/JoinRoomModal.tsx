@@ -1,34 +1,26 @@
-import {Button, Form, Input, Modal} from "react-daisyui";
 import {FormEvent, useState} from "react";
-import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
-import {setDoc, doc, collection, document, addDoc} from 'firebase/firestore'
-import {db} from "../firebase.ts";
-import {UseChat} from "../context/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
+import {UseRoom} from "../context/RoomsProvider.tsx";
 
 interface NewRoomModalProps{
     onDisMiss : () => void
-    id : string
+    //id : string
 }
 
-export function JoinRoomModal({onDisMiss, id}:NewRoomModalProps){
+export function JoinRoomModal({onDisMiss}:NewRoomModalProps){
     const [value, setValue] = useState("")
-    const { currentUser } = UseChat();
-    console.log(id)
+    const { joinGroup } = UseRoom()
+
+    //console.log(id)
     const navigate = useNavigate();
-    async function handleJoin(e : FormEvent<HTMLInputElement>){
+    function HandleJoin(e : FormEvent<HTMLFormElement>){
         e.preventDefault();
         try{
-            if(value === id){
-                navigate("/chat")
+            if(value){
+                navigate(`chat/${value}`)
+                joinGroup(value)
             }
-            /*const message = doc(db,"message",id)
-            const messages = collection(message, "messages")
-            await addDoc(messages,{
-                    text : value,
-                    name : currentUser?.displayName
-                })*/
+            onDisMiss()
             }
         catch (err){
             console.log(err)
@@ -37,22 +29,24 @@ export function JoinRoomModal({onDisMiss, id}:NewRoomModalProps){
 
     return(
         <>
-            <Modal open backdrop className="modal-top">
-                <Modal.Header>
-                    <Modal.Actions>
+            <dialog open className="modal modal-middle ">
+                <div className="modal-box flex justify-center align-middle flex-col">
+                <div className="modal-box">
+                    <div className="modal-action">
                         <form method="dialog">
-                            <Button onClick={onDisMiss}>X</Button>
+                            <button onClick={onDisMiss} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">X</button>
                         </form>
-                    </Modal.Actions>
-                    Join Id
-                </Modal.Header>
-                <Modal.Body className="my-5">
-                    <Form onSubmit={handleJoin}>
-                        <Input type="text" onChange={(e)=>setValue(e.target.value)} value={value} size="xs" className="input text-black w-full bg-gray-300 my-5" />
-                        <Button type="submit" className="w-full  btn btn-primary">Add</Button>
-                    </Form>
-                </Modal.Body>
-            </Modal>
+                    </div>
+                    <span className="font-bold text-md">Join Id</span>
+                </div>
+                <div className="modal-box my-5">
+                    <form onSubmit={HandleJoin}>
+                        <input type="text" onChange={(e)=>setValue(e.target.value)} value={value} className="input text-black w-full bg-gray-300 my-5" />
+                         <button type="submit" className="btn w-full ">Add</button>
+                    </form>
+                </div>
+                </div>
+            </dialog>
         </>
     )
 }

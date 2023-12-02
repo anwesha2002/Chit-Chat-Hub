@@ -1,46 +1,44 @@
-import {Button, Form, Input, Modal} from "react-daisyui";
-import {FormEvent, useRef, useState} from "react";
-import {addDoc, collection, serverTimestamp} from "firebase/firestore";
-import {db} from "../firebase.ts";
-import {UseChat} from "../context/AuthContext.tsx";
-import {UseChatRoom} from "../context/ChatRoomContext.tsx";
+import {FormEvent} from "react";
+import {UseRoom} from "../context/RoomsProvider.tsx";
 
 interface NewRoomModalProps {
     onDisMiss : () => void
 
 }
 export function NewRoomModal({onDisMiss}:NewRoomModalProps){
-   // const nameRef = useRef<HTMLInputElement>(null)
-   // const [value , setValue] = useState("")
-    //const { currentUser } = UseChat()
-    const { createRoom , roomName, setRoomName}=  UseChatRoom()
+    const { createRoom , roomName, setRoomName}=  UseRoom()
+
 
     function HandleSubmit(e : FormEvent<HTMLFormElement>){
         e.preventDefault()
         createRoom(roomName);
-        //console.log(value)
         setRoomName("")
+        onDisMiss()
     }
 
     return(
-        <Modal open backdrop className="modal-top">
-            <Modal.Header>
-                <Modal.Actions>
+        <>
+        <dialog open className="modal modal-middle  ">
+            <div className="modal-box">
+            <div className="modal-box">
+                <div className="modal-action ">
                     <form method="dialog">
-                        <Button onClick={onDisMiss}>X</Button>
+                        <button onClick={onDisMiss} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">x</button>
                     </form>
-                </Modal.Actions>
-                New Room
-            </Modal.Header>
-            <Modal.Body className="my-5">
-                <Form onSubmit={HandleSubmit}>
-                    <Form.Label >
+                </div>
+                <span className="font-bold text-md">New Room</span>
+            </div>
+            <div className="modal-box my-5">
+                <form onSubmit={HandleSubmit}>
+                    <div className="form-control">
                         Name
-                    </Form.Label>
-                    <Input type="text" onChange={(e)=>setRoomName(e.target.value)} value={roomName} size="xs" className="input text-black w-full bg-gray-300 my-5" />
-                    <Button type="submit" className="w-full  ">Save</Button>
-                </Form>
-            </Modal.Body>
-        </Modal>
+                    </div>
+                    <input type="text" onChange={(e)=>setRoomName(e.target.value)} value={roomName}  className="input text-black w-full bg-gray-300 my-5" />
+                    <button value="submit" type="submit" className="btn w-full">Save</button>
+                </form>
+            </div>
+            </div>
+        </dialog>
+        </>
     )
 }

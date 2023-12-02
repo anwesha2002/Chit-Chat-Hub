@@ -44,6 +44,7 @@ export function AuthContextprovider({children} : ChatContextproviderProps){
         const unsubscribe = auth.onAuthStateChanged(  (firebaseUser   )     => {
             setCurrentUser(firebaseUser);
             setLoading(false);
+
         })
         return ()=>{
             unsubscribe();

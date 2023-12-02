@@ -1,57 +1,38 @@
 import {Button, Card} from "react-daisyui";
+import {Link} from 'react-router-dom'
 import {RoomType} from "../model/room.ts";
-import {useEffect, useState} from "react";
-import {JoinRoomModal} from "./JoinRoomModal.tsx";
-import {UseChatRoom} from "../context/ChatRoomContext.tsx";
-import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
-import {db} from "../firebase.ts";
-import firebase from "firebase/compat/app";
-import DocumentData = firebase.firestore.DocumentData;
+import {UseRoom} from "../context/RoomsProvider.tsx";
+import { IoTrash} from "react-icons/io5";
 
 export function Room({id , room_name, createdBy} : RoomType){
-    const [clickedJoin, setClickedJoin] = useState(false)
-    const {    setMessage } = UseChatRoom()
-    const [roomId, setRoomId, ] = useState("")
+    const { deleteGroup } = UseRoom()
 
-    function handleclick(id : string){
-        setRoomId(id)
+    function handleDelete(id : string){
+        deleteGroup(id)
     }
 
-    useEffect(() => {
-        const chatCollectionRef = query(
-            collection(db,`message/${roomId}/messages`),
-            orderBy("createdAt"),
-        );
-        console.log(roomId)
-        const unsubscribe = onSnapshot(chatCollectionRef,(querySnapshot) => {
-            const messages : DocumentData[] = []
-            querySnapshot.docs.map((doc)=>(
-                messages.push({...doc.data()})
-            ))
-            setMessage(messages);
-        })
-        return unsubscribe
-    }, [roomId]);
-
-
+    //console.log(id, "=>", group)
     return(
         <>
-            <Card onClick={()=>handleclick(id)} className="w-full p-3 rounded-full my-4 bg-gray-300 shadow-gray-400-xl" compact bordered>
-                <Card.Body className="text-black flex flex-row justify-between items-center">
-                    <div>
-                        <Card.Title tag="h2">
-                            <h2>{room_name}</h2>
-                        </Card.Title>
-                        <p>Created By : {createdBy}</p>
-                    </div>
-                    <Button onClick={()=>setClickedJoin(true)}>Join</Button>
+            <Card id="chatgroup"  className=" p-5 rounded-full m-4 bg-gray-400 flex justify-center items-center shadow-gray-400-xl  border-2 border-b-blue-500 border-t-blue-500 bg-base-false" compact bordered>
+               <Card.Body className="text-neutral-400 hover:text-black flex flex-col justify-between items-center">
+                   <Link to={`chat/${id}`}>
+                       <div>
+                            <Card.Title className="text-center" tag="h2">
+                                <h2>{room_name}</h2>
+                            </Card.Title>
+                            <p>Created By : {createdBy}</p>
+                        </div>
+                   </Link>
+                    <Button className="btn btn-ghost btn-sm" onClick={()=>navigator.clipboard.writeText(`${id}`)}>copy Id</Button>
+                   <button onClick={() => handleDelete(id)} className="btn btn-sm btn-ghost "><IoTrash style={{color: "red"}}/></button>
                 </Card.Body>
-                {clickedJoin &&
+                {/*clickedJoin &&
                     <JoinRoomModal
                         onDisMiss={()=>setClickedJoin(false)}
                         id={id}
                     />
-                }
+                */}
             </Card>
         </>
     )

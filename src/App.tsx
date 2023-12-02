@@ -6,28 +6,37 @@ import {Route, Routes} from "react-router-dom";
 import {PrivateRoute} from "./component/PrivateRoute.tsx";
 import {AuthContextprovider} from "./context/AuthContext.tsx";
 import {Rooms} from "./pages/Rooms.tsx";
-import {NewRoomModal} from "./component/NewRoomModal.tsx";
-import {useState} from "react";
 import {ChatRoomProvider} from "./context/ChatRoomContext.tsx";
+import {RoomContextProvider} from "./context/RoomsProvider.tsx";
+import {SendMEssageContextProvider} from "./context/SendMessageContext.tsx";
 
 function App() {
-
 
     return (
         <div>
             <AuthContextprovider>
-                <ChatRoomProvider>
-                    <Navbar/>
+                            <RoomContextProvider>
+                                <Navbar/>
                     <Routes>
                         <Route path="/" element={<Login/>}></Route>
-                        <Route path="/room" element={
-                            <PrivateRoute>
-                                <Rooms/>
-                            </PrivateRoute>
-                        }></Route>
-                        <Route path="/chat" element={<Chatroom/>}></Route>
+                            <Route path="/room" element={
+                                <PrivateRoute>
+                                    <ChatRoomProvider>
+                                        <Rooms/>
+                                    </ChatRoomProvider>
+                                </PrivateRoute>
+                            }></Route>
+                            <Route path="room/chat/:roomId" element=
+                                {
+                                    <ChatRoomProvider>
+                                        <SendMEssageContextProvider>
+                                            <Chatroom/>
+                                        </SendMEssageContextProvider>
+                                    </ChatRoomProvider>
+                                }>
+                            </Route>
                     </Routes>
-                </ChatRoomProvider>
+                            </RoomContextProvider>
             </AuthContextprovider>
 
         </div>
