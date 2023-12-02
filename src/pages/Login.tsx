@@ -1,11 +1,11 @@
 import {UseChat} from "../context/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
-import wallpaper from  '../assets/wallpaper1.jpg'
-import chatbot from  '../assets/chatbot.jpg'
-import createGroup from  '../assets/createGroup.jpg'
-import joinWdId from  '../assets/joinId.jpg'
-import '../Style/LoginPage.css'
+import wallpaper from  '../assets/wallpaper1.jpg';
+import chatbot from  '../assets/chatbot.jpg';
+import createGroup from  '../assets/createGroup.jpg';
+import joinWdId from  '../assets/joinId.jpg';
+import '../Style/LoginPage.css';
 
 export function Login(){
     const { currentUser, signInWithGoogle } = UseChat()
