@@ -1,27 +1,28 @@
-# React + TypeScript + Vite
+# Chit-Chat-Hub - Your Ultimate Chatting Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot 2023-12-03 015309](https://github.com/anwesha2002/Chit-Chat-Hub/assets/116761608/bf3b5837-b8a6-4885-964e-47dbe04e0e75)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Welcome to Chit-Chat-Hub, a feature-rich chatting application that provides a seamless communication experience for users. Whether you want to connect with friends in group chats, have private conversations in dedicated chat rooms, or quickly join specific chats using unique Chat IDs, Chit-Chat-Hub has you covered.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Group Chat:** Engage in lively discussions with multiple users in a group setting. Stay connected with friends, family, or colleagues effortlessly.
 
-- Configure the top-level `parserOptions` property like this:
+- **Private Chat Rooms:** Create private chat rooms for more intimate conversations. Invite specific users for a focused and personalized chat experience.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- **Join with Chat ID:** Enter a unique Chat ID to quickly join specific chat rooms. Perfect for joining discussions, events, or private conversations with ease.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Real-time Messaging:** Experience real-time messaging with instant message delivery. Enjoy a smooth and responsive chat interface.
+
+- **User Profiles:** Create and customize your user profile. Add a profile picture, update your status, and personalize your Chatify experience.
+
+## Getting Started
+
+To get started with Chatify, follow these simple steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/chatify.git
+
