@@ -27,11 +27,11 @@ export function Login(){
     console.log(currentUser)
     return(
         <>
-            <div className=" flex flex-wrap justify-between  overflow-hidden max-w-full mt-10 max-h-screen login-background" >
-                <div className=" max-w-3xl  mt-52 ms-10 float-left " >
-                        <h1 className=" text-6xl  overflow-hidden">DISCOVER MORE PEOPLE AND GET MORE SWIPES!</h1>
+            <div className=" flex flex-wrap justify-between items-center overflow-hidden max-w-full mt-10 h-full login-background" >
+                <div className=" max-w-3xl float-left mt-44 ms-10  " >
+                    <h1 className=" text-6xl  overflow-hidden">DISCOVER MORE PEOPLE AND GET MORE SWIPES!</h1>
                     <h5 className="my-10 text-2xl">Great software that allows you to chat from any place at any place without any interruption</h5>
-                    <button onClick={handleSignIn} className="bg-rose-900 text-3xl p-4 rounded-full overflow-hidden">Login with google</button>
+                    <button onClick={handleSignIn} className="bg-rose-900 text-3xl mb-5 p-4 rounded-full overflow-hidden">Login with google</button>
                 </div>
                 <img src={wallpaper} className="h-screen float-right right-0"/>
             </div>
@@ -51,9 +51,6 @@ export function Login(){
                         <h6 className="text-center ">Join chat-room with private id</h6>
                     </div>
                 </div>
-            </div>
-            <div>
-
             </div>
 
             {/*<div className="hero min-h-screen bg-base-200">
