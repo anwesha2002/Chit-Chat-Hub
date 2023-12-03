@@ -4,19 +4,20 @@ import {Navbar} from "./component/Navbar.tsx";
 import {Chatroom} from "./pages/Chatroom.tsx";
 import {Route, Routes} from "react-router-dom";
 import {PrivateRoute} from "./component/PrivateRoute.tsx";
-import {AuthContextprovider} from "./context/AuthContext.tsx";
+import {AuthContextprovider, UseChat} from "./context/AuthContext.tsx";
 import {Rooms} from "./pages/Rooms.tsx";
 import {ChatRoomProvider} from "./context/ChatRoomContext.tsx";
 import {RoomContextProvider} from "./context/RoomsProvider.tsx";
 import {SendMEssageContextProvider} from "./context/SendMessageContext.tsx";
 
 function App() {
+const { currentUser } = UseChat()
 
     return (
         <div>
             <AuthContextprovider>
                             <RoomContextProvider>
-                                <Navbar/>
+                                {currentUser && <Navbar/>}
                     <Routes>
                         <Route path="/" element={<Login/>}></Route>
                             <Route path="/room" element={

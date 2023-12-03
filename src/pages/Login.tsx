@@ -27,8 +27,8 @@ export function Login(){
     console.log(currentUser)
     return(
         <>
-            <div className=" flex flex-wrap justify-between items-center overflow-hidden max-w-full mt-10 h-full login-background" >
-                <div className=" max-w-3xl float-left mt-44 ms-10  " >
+            <div className=" flex flex-wrap justify-between items-center overflow-hidden max-w-full  h-full login-background" >
+                <div className=" max-w-3xl float-left mt-36 ms-10  " >
                     <h1 className=" text-6xl  overflow-hidden">DISCOVER MORE PEOPLE AND GET MORE SWIPES!</h1>
                     <h5 className="my-10 text-2xl">Great software that allows you to chat from any place at any place without any interruption</h5>
                     <button onClick={handleSignIn} className="bg-rose-900 text-3xl mb-5 p-4 rounded-full overflow-hidden">Login with google</button>
