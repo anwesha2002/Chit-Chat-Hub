@@ -15,14 +15,31 @@ Welcome to Chit-Chat-Hub, a feature-rich chatting application that provides a se
 
 - **Real-time Messaging:** Experience real-time messaging with instant message delivery. Enjoy a smooth and responsive chat interface.
 
-- **User Profiles:** Create and customize your user profile. Add a profile picture, update your status, and personalize your Chatify experience.
+- **User Profiles:** Create and customize your user profile. Add a profile picture, update your status, and personalize your Chit-Chat-Hub experience.
 
 ## Getting Started
 
-To get started with Chatify, follow these simple steps:
+To get started with Chit-Chat-Hub, follow these simple steps:
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/chatify.git
+   https://github.com/anwesha2002/Chit-Chat-Hub.git
+
+   cd Chit-Chat-Hub
+
+   npm install
+
+   npm start```
+
+## Usage
+
+- Launch Chatify and create an account or log in if you already have one.
+  
+- Explore the intuitive user interface and discover the features.
+  
+- Start or join group chats, create private chat rooms, and use Chat IDs to connect with specific discussions.
+
+
+
 
