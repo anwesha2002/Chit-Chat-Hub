@@ -30,7 +30,7 @@ To get started with Chit-Chat-Hub, follow these simple steps:
 
    npm install
 
-   npm start```
+   npm start
 
 ## Usage
 
