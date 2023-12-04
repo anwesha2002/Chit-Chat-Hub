@@ -5,18 +5,16 @@ import {
     doc,
     setDoc,
     getDoc,
-    updateDoc,
-    arrayUnion,
     deleteDoc ,
     query,
-    arrayRemove,
-    onSnapshot, orderBy
+    onSnapshot, orderBy, getDocs
 } from "firebase/firestore";
 import {db} from "../firebase.ts";
 import {UseChat} from "./AuthContext.tsx";
 import firebase from "firebase/compat/app";
 import DocumentData = firebase.firestore.DocumentData;
 import {RoomType} from "../model/room.ts";
+import {ChatMember} from "../model/ChatMember.ts";
 
 type roomContextRroviderPros = {
     children : ReactNode
@@ -31,6 +29,7 @@ type chatContextProps ={
     joinGroup : (id : string) => void,
     room : DocumentData[] | RoomType[]
     deleteGroup : (id: string) => void
+    message : DocumentData[] |  ChatMember[]
 }
 
 const roomContext = createContext({} as chatContextProps)
@@ -41,14 +40,17 @@ export function UseRoom(){
 export function RoomContextProvider({children} : roomContextRroviderPros){
     const { currentUser } = UseChat()
     const [roomName , setRoomName] = useState("");
-    const [roomId, setRoomId] = useState("")
+    const [roomId, setRoomId] = useState("roomId")
     const [room , setRoom ] = useState<RoomType[] | DocumentData[]>([])
-    //const [docdata , setDocdata] = useState<string[]>([])
-    const userGroupRef = doc(db, "users" , `${currentUser?.uid}`)
+    //const userGroupRef = doc(db, "users" , `${currentUser?.uid}`)
     const groupCollectionRef = query(
         collection(db,"group"),
         orderBy("room_name")
     );
+
+    const [message, setMessage] = useState<DocumentData[] |  ChatMember[]>([])
+
+
     //const [group, setGroup] = useState(false)
     async function createRoom(roomName : string){
         try {
@@ -60,6 +62,11 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                     //setId(docRef.id);
                     setDoc(doc(db,"message",`${docRef.id}`),{})
                     joinGroup(docRef.id)
+                    setRoomId(docRef.id)
+                   /* const document  = doc(db, "group", `${docRef.id}`)
+                    const docSnap = await getDoc(document)
+                    console.log(docSnap.data())
+                    setRoom(room=>({...room, }))*/
                     // const message = collection(db,"message")
                     // doc(message,`${docRef.id}`).set({})
                 })
@@ -72,8 +79,25 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }
 
     useEffect(() => {
-        const groupArray : string[] = [];
-        (async ()=>{
+        console.log(roomId)
+        const chatCollectionRef = query(
+            collection(db,"message", `${roomId}`, "messages"),
+            orderBy("createdAt"),
+        );
+        const unsubscribe = onSnapshot(chatCollectionRef,(querySnapshot) => {
+            const messages : DocumentData[] = []
+            querySnapshot.docs.map((doc)=>(
+                messages.push({...doc.data()})
+            ))
+            setMessage(messages);
+            console.log("message",messages)
+        })
+        return unsubscribe
+    }, [roomId]);
+
+    useEffect(() => {
+       // const groupArray : string[] = [];
+        /*(async ()=>{
             try {
                 //const querysnapshot =  doc(db,"users", `${currentUser?.uid}`);
                 const docsnap= await getDoc(userGroupRef)
@@ -81,33 +105,46 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
             }catch (err){
                 console.log(err)
             }
-        })();
+        })();*/
+        /*const unsub = onSnapshot(collection(db, "users" , `${currentUser?.uid}`, "LoggedIn"  )
+            , (doc) =>{
+            groupArray.push(doc.data()?.group)
+        })*/
         const unsubscribe = onSnapshot(groupCollectionRef,(querySnapShot) => {
-            const group: DocumentData[] = [];
-            querySnapShot.docs.map((document)=>{
-                groupArray.map(doc=>
-                    doc.includes(`${document.id}`) && group.push({ ...document.data(), id : document.id})
-                )
-            });
+           onSnapshot(collection(db,"users", `${currentUser?.uid}`, "LoggedIn"),(documents)=>{
+               const group : DocumentData[] = []
+               querySnapShot.docs.map(docs=>(
+                   documents.docs.map((doc)=>doc.id).includes(`${docs.id}`) && group.push({...docs.data(), id : docs.id})
+               ))
+
             setRoom(group);
+            console.log(group)
+           })
         })
         return unsubscribe;
     }, []);
 
     async function joinGroup(id : string){
-        await updateDoc(userGroupRef,{
+        /*await updateDoc(userGroupRef,{
             group : arrayUnion(id)
-        })
+        })*/
+        await setDoc(doc(db, "users" , `${currentUser?.uid}` , "LoggedIn" , `${id}` ), {})
+        //return setDoc(doc(db,"users",`${currentUser?.uid}`, "LoggedIn" , `${id}`),{})
     }
 
     async function deleteGroup(id:string){
         try {
             //const users = collection(db, "users")
             await deleteDoc(doc(db, "group",`${id}`))
+            //await deleteField(doc(db, "message",`${id}`, "messages"))
+            const messages = collection(db, "message" , `${id}`, "messages")
+            getDocs(messages).then(docs=>docs.docs.map(document=>deleteDoc(doc(db,"message",`${id}`,"messages",`${document.id}`))))
             await deleteDoc(doc(db, "message",`${id}`))
-            await updateDoc(userGroupRef, {
-                group : arrayRemove(id)
-            })
+            const logedUsers = collection(db, "users")
+            const docsnap = getDocs(logedUsers)
+            docsnap.then(docs=>docs.docs.map(document=>
+                deleteDoc(doc(db,"users", `${document.id}`, "LoggedIn" , `${id}`))
+            ))
         }catch (err){
             console.log(err)
         }
@@ -144,7 +181,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }, [(currentUser?.email)]);
 
     return(
-        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup}}>
+        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message}}>
             {children}
         </roomContext.Provider>
     )

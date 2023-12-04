@@ -1,9 +1,9 @@
 import {Message} from "./Message.tsx";
 import { useEffect, useRef} from "react";
-import {UseChatRoom} from "../context/ChatRoomContext.tsx";
+import {UseRoom} from "../context/RoomsProvider.tsx";
 
 export function ChatBox(){
-    const { message } = UseChatRoom()
+    const { message } = UseRoom()
     const messageRef  = useRef<HTMLDivElement>(null)
 
     const scrollToBottom = () => {

@@ -9,13 +9,11 @@ export function Rooms(){
     const { room } = UseRoom()
     const [clickedJoin, setClickedJoin] = useState(false)
 
-
-    console.log(room)
     return(
         <>
-            <div className="overflow-auto">
-                <div onClick={()=>setClickedJoin(true)} title="Join Room with id"  className="flex justify-center m-5 fixed btn rounded-full btn-active right-0 bottom-0 overflow-hidden text-4xl">+</div>
-                <div className="flex justify-center flex-wrap gap-1 mx-16 my-16">
+            <div className=" overflow-auto float-left w-1/3 h-screen bg-base-300">
+                <div onClick={()=>setClickedJoin(true)} title="Join Room with id"  className="flex justify-center items-center m-5 fixed btn rounded-full btn-neutral bottom-0 overflow-hidden text-4xl">+</div>
+                <div className="flex flex-col items-center justify-center gap-1 mx-16 my-16">
                     {room.map(room=>(
                         <Room key={room.id} {...room} />
                     ))}

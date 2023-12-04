@@ -20,7 +20,7 @@ export function SendMessage(){
 
     return(
         <>
-            <div className="bg-gray-500 fixed bottom-0 w-full px-10 py-5 shadow-sm flex justify-center">
+            <div className="bg-gray-500 fixed bottom-0 w-2/3 px-10 py-5 shadow-sm flex justify-center">
                 <form onSubmit={handleSubmit} className="container flex justify-around">
                     <input value={value} onChange={e => setValue(e.target.value)} className="input w-full focus:outline-none  rounded-r-none" type="text"/>
                     <button type="submit" className="bg-gray-200 w-auto rounded-r-lg text-black flex flex-row justify-center items-center">

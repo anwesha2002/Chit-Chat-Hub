@@ -1,12 +1,12 @@
-import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState} from "react";
+/*import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState} from "react";
 import {
     collection,
     onSnapshot,
     orderBy,
     query,
 } from "firebase/firestore";
-import {db} from "../firebase.ts";
-import firebase from "firebase/compat/app";
+import {db} from "../firebase.ts";*/
+/*import firebase from "firebase/compat/app";
 import DocumentData = firebase.firestore.DocumentData;
 import {ChatMember} from "../model/ChatMember.ts";
 import { useParams} from "react-router-dom";
@@ -32,7 +32,7 @@ export function ChatRoomProvider({children}: ChatRoomProviderProps){
 
     // const chatCollectionRef = query((collection(db,"message",roomId,"messages")));
     //orderBy("createdAt")
-    const { roomId } = useParams()
+    const { roomId } = useParams()*/
 
 
 
@@ -71,7 +71,7 @@ export function ChatRoomProvider({children}: ChatRoomProviderProps){
         // const queryData = collection(db, querydata)
         // const [doc,loading, error] = useCollection<DocumentData>(queryData)
 
-    useEffect(() => {
+    /*useEffect(() => {
         const chatCollectionRef = query(
             collection(db,"message", `${roomId}`, "messages"),
             orderBy("createdAt"),
@@ -85,8 +85,8 @@ export function ChatRoomProvider({children}: ChatRoomProviderProps){
             console.log("message",messages)
         })
         return unsubscribe
-    }, [roomId]);
-    console.log("message 1", message)
+    }, [roomId]);*/
+    /*console.log("message 1", message)
 
     //console.log("doc id",doc_id)
 
@@ -97,4 +97,4 @@ export function ChatRoomProvider({children}: ChatRoomProviderProps){
         </chatContext.Provider>
     )
 
-}
+}*/

@@ -2,7 +2,7 @@ import {createContext, Dispatch, ReactNode, SetStateAction, useContext, useState
 import {addDoc, collection, serverTimestamp} from "firebase/firestore";
 import {db} from "../firebase.ts";
 import {UseChat} from "./AuthContext.tsx";
-import {useParams} from "react-router-dom";
+import {UseRoom} from "./RoomsProvider.tsx";
 
 
 type sendMessageContextProps = {
@@ -24,7 +24,7 @@ export function UseSendmessgae(){
 export function SendMEssageContextProvider({children} : sendMessageContextProps){
     const [value , setValue] = useState("")
     const { currentUser } = UseChat()
-    const { roomId } = useParams()
+    const { roomId } = UseRoom()
 
 
     async function sendMessage(){

@@ -20,7 +20,7 @@ export function Login(){
 
     useEffect(() => {
         if(currentUser){
-            navigate("/room")
+            navigate("/home")
         }
     }, [currentUser]);
 
