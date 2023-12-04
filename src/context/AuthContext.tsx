@@ -53,7 +53,6 @@ export function AuthContextprovider({children} : ChatContextproviderProps){
 
     return(
         <authContext.Provider value={{currentUser, signInWithGoogle, signOut}}>
-
             {!loading && children}
         </authContext.Provider>
     )

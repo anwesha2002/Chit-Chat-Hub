@@ -30,6 +30,8 @@ type chatContextProps ={
     room : DocumentData[] | RoomType[]
     deleteGroup : (id: string) => void
     message : DocumentData[] |  ChatMember[]
+    setChatRoom : Dispatch<SetStateAction<string>>,
+    chatRoom :string
 }
 
 const roomContext = createContext({} as chatContextProps)
@@ -42,13 +44,13 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     const [roomName , setRoomName] = useState("");
     const [roomId, setRoomId] = useState("roomId")
     const [room , setRoom ] = useState<RoomType[] | DocumentData[]>([])
-    //const userGroupRef = doc(db, "users" , `${currentUser?.uid}`)
     const groupCollectionRef = query(
         collection(db,"group"),
         orderBy("room_name")
     );
 
     const [message, setMessage] = useState<DocumentData[] |  ChatMember[]>([])
+    const [chatRoom , setChatRoom] = useState("")
 
 
     //const [group, setGroup] = useState(false)
@@ -62,13 +64,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                     //setId(docRef.id);
                     setDoc(doc(db,"message",`${docRef.id}`),{})
                     joinGroup(docRef.id)
-                    setRoomId(docRef.id)
-                   /* const document  = doc(db, "group", `${docRef.id}`)
-                    const docSnap = await getDoc(document)
-                    console.log(docSnap.data())
-                    setRoom(room=>({...room, }))*/
-                    // const message = collection(db,"message")
-                    // doc(message,`${docRef.id}`).set({})
                 })
             }
         } catch (err) {
@@ -96,20 +91,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }, [roomId]);
 
     useEffect(() => {
-       // const groupArray : string[] = [];
-        /*(async ()=>{
-            try {
-                //const querysnapshot =  doc(db,"users", `${currentUser?.uid}`);
-                const docsnap= await getDoc(userGroupRef)
-                groupArray.push(docsnap.data()?.group)
-            }catch (err){
-                console.log(err)
-            }
-        })();*/
-        /*const unsub = onSnapshot(collection(db, "users" , `${currentUser?.uid}`, "LoggedIn"  )
-            , (doc) =>{
-            groupArray.push(doc.data()?.group)
-        })*/
         const unsubscribe = onSnapshot(groupCollectionRef,(querySnapShot) => {
            onSnapshot(collection(db,"users", `${currentUser?.uid}`, "LoggedIn"),(documents)=>{
                const group : DocumentData[] = []
@@ -125,11 +106,8 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }, []);
 
     async function joinGroup(id : string){
-        /*await updateDoc(userGroupRef,{
-            group : arrayUnion(id)
-        })*/
         await setDoc(doc(db, "users" , `${currentUser?.uid}` , "LoggedIn" , `${id}` ), {})
-        //return setDoc(doc(db,"users",`${currentUser?.uid}`, "LoggedIn" , `${id}`),{})
+        setRoomId(id)
     }
 
     async function deleteGroup(id:string){
@@ -150,18 +128,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
         }
     }
 
-     /*async function userCheck(id : string){
-        const querysnapshot = await getDocs(collection(db,"users"));
-        const groupArray : string[] = []
-         querysnapshot.forEach((doc)=>{
-             groupArray.push({...doc.data().group})
-         })
-         groupArray.map(group=>(
-             group === id ? setGroup(true) : setGroup(false)
-         ))
-    }*/
-
-
     useEffect(() => {
         async function joinUser() {
             try{
@@ -181,7 +147,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }, [(currentUser?.email)]);
 
     return(
-        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message}}>
+        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message, setChatRoom, chatRoom}}>
             {children}
         </roomContext.Provider>
     )

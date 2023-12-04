@@ -4,7 +4,8 @@ import firebase from "firebase/compat/app";
 import DocumentData = firebase.firestore.DocumentData;
 import {FormatDate} from "../Util/DateFormat.tsx";
 type messgeProps ={
-    message : ChatMember | DocumentData
+    message : ChatMember | DocumentData,
+
 }
 
 export function Message({message}: messgeProps){
@@ -12,7 +13,7 @@ export function Message({message}: messgeProps){
     return(
         <>
             {currentUser &&
-                <div className={`chat ${ message.id === currentUser.uid ? "chat-end" : "chat-start"}`}>
+                <div className={`chat m-2  ${ message.id === currentUser.uid ? "chat-end" : "chat-start"}`}>
                     <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                             <img src={message.avatar} />
@@ -22,7 +23,7 @@ export function Message({message}: messgeProps){
                         {message.name}
                         <time className="text-xs opacity-50"></time>
                     </div>
-                    <div className="chat-bubble chat-bubble-primary">{message.text}</div>
+                    <div className="chat-bubble chat-bubble-primary m-1">{message.text}</div>
                     <div className="chat-footer opacity-50">
                         {FormatDate(message.createdAt)}
                     </div>

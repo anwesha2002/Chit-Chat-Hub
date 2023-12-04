@@ -19,16 +19,16 @@ export function NewRoomModal({onDisMiss}:NewRoomModalProps){
     return(
         <>
         <dialog open className="modal modal-middle  ">
-            <div className="modal-box">
-            <div className="modal-box">
+            <div className="modal-box shadow-sm flex bg-gray-700 justify-center items-center flex-col">
+            <div >
                 <div className="modal-action ">
                     <form method="dialog">
                         <button onClick={onDisMiss} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">x</button>
                     </form>
                 </div>
-                <span className="font-bold text-md">New Room</span>
+                <span className="font-bold text-lg">New Room</span>
             </div>
-            <div className="modal-box my-5">
+            <div className="modal-box bg-base-100/75 my-5">
                 <form onSubmit={HandleSubmit}>
                     <div className="form-control">
                         Name

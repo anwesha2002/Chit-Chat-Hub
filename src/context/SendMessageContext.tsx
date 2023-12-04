@@ -13,6 +13,7 @@ type UseSendMessgaeProps = {
     value : string,
     setValue : Dispatch<SetStateAction<string>>
     sendMessage : () => void
+    chatRoom :string
 }
 
 const sendMessageContext = createContext({} as UseSendMessgaeProps)
@@ -24,7 +25,7 @@ export function UseSendmessgae(){
 export function SendMEssageContextProvider({children} : sendMessageContextProps){
     const [value , setValue] = useState("")
     const { currentUser } = UseChat()
-    const { roomId } = UseRoom()
+    const { roomId, chatRoom } = UseRoom()
 
 
     async function sendMessage(){
@@ -41,10 +42,9 @@ export function SendMEssageContextProvider({children} : sendMessageContextProps)
         }
     }
 
-    //console.log(currentUser?.photoURL)
 
     return(
-        <sendMessageContext.Provider value={{value , setValue, sendMessage}}>
+        <sendMessageContext.Provider value={{value , setValue, sendMessage, chatRoom}}>
             {children}
         </sendMessageContext.Provider>
     )

@@ -31,7 +31,7 @@ export function Login(){
                 <div className=" max-w-3xl float-left mt-36 ms-10  " >
                     <h1 className=" text-6xl  overflow-hidden">DISCOVER MORE PEOPLE AND GET MORE SWIPES!</h1>
                     <h5 className="my-10 text-2xl">Great software that allows you to chat from any place at any place without any interruption</h5>
-                    <button onClick={handleSignIn} className="bg-rose-900 text-3xl mb-5 p-4 rounded-full overflow-hidden">Login with google</button>
+                    <button onClick={handleSignIn} className="bg-rose-800 text-3xl mb-5 p-4 rounded-full overflow-hidden">Login with google</button>
                 </div>
                 <img src={wallpaper} className="h-screen float-right right-0"/>
             </div>
@@ -52,15 +52,13 @@ export function Login(){
                     </div>
                 </div>
             </div>
-
-            {/*<div className="hero min-h-screen bg-base-200">
-                <div className="hero-content text-center">
-                    <div className="max-w-md w-full">
-
-                        <h1 className="text-5xl font-bold overflow-hidden">HELLO THERE </h1>
-                        <p className="py-6">Get connected with many people in the same platform</p>
-                        <button onClick={handleSignIn} className="btn btn-neutral">Login with google</button>
-                    </div>
+            {/*<div style={{backgroundColor: "rgb(67, 54, 74)"}}
+                  className="icon-image h-full overflow-hidden flex flex-wrap justify-around  flex-row">
+                <img className="w-1/4 " src={unlimitedChat}/>
+                <div className="flex justify-around  flex-col flex-wrap text-4xl ">
+                    <div className="overflow-visible ">Chat without limits out</div>
+                    <div className="overflow-visible">Login with multiple google account</div>
+                    <div className="overflow-visible ">Delete unwanted group</div>
                 </div>
             </div>*/}
         </>

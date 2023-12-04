@@ -2,6 +2,8 @@ import {Message} from "./Message.tsx";
 import { useEffect, useRef} from "react";
 import {UseRoom} from "../context/RoomsProvider.tsx";
 
+
+
 export function ChatBox(){
     const { message } = UseRoom()
     const messageRef  = useRef<HTMLDivElement>(null)
@@ -16,9 +18,9 @@ export function ChatBox(){
 
     return(
         <>
-            <div className="mb-28 mt-16">
+            <div className="mb-28 ">
                 {message.map(message=>(
-                    <Message key={message.id} message={message}/>
+                    <Message  key={message.id} message={message}/>
                 ))}
                 <div ref={messageRef}></div>
             </div>

@@ -21,9 +21,7 @@ export function Navbar(){
                 {currentUser &&
                     <div className="navbar fixed bg-gray-700 z-10 top-0">
                     <div className="flex-1">
-                        {currentUser ?
-                            <a className="btn btn-ghost normal-case text-gray-400 text-xl">Rooms</a>
-                            : <a className="btn btn-ghost normal-case text-gray-400 text-xl">Chatter Box</a>}
+                        <a className="btn btn-ghost normal-case text-gray-400 text-xl">Chatter Box</a>
                     </div>
                     {currentUser &&
                         <div className="navbar-end flex  items-center">

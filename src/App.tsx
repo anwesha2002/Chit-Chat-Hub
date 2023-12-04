@@ -11,32 +11,25 @@ import {SendMEssageContextProvider} from "./context/SendMessageContext.tsx";
 
 function App() {
 
+
     return (
         <div>
             <AuthContextprovider>
-                            <RoomContextProvider>
-                            <Navbar/>
-                    <Routes>
-                        <Route path="/" element={<Login/>}></Route>
-                           <Route path="/home" element={
-                                <PrivateRoute>
-                                        <Rooms/>
-                                        <SendMEssageContextProvider>
-                                            <Chatroom/>
-                                        </SendMEssageContextProvider>
-                                </PrivateRoute>
-                            }></Route>
-                        {/*<Route path="room/chat/:roomId" element=
-                                {
-                                    <ChatRoomProvider>
-                                        <SendMEssageContextProvider>
-                                            <Chatroom/>
-                                        </SendMEssageContextProvider>
-                                    </ChatRoomProvider>
-                                }>
-                            </Route>*/}
-                    </Routes>
-                            </RoomContextProvider>
+                <RoomContextProvider>
+                <Navbar/>
+                <Routes>
+                    <Route path="/" element={<Login/>}></Route>
+                       <Route path="/home" element={
+                            <PrivateRoute>
+                                    <Rooms />
+                                    <SendMEssageContextProvider>
+                                        <Chatroom/>
+                                    </SendMEssageContextProvider>
+                            </PrivateRoute>
+                        }>
+                       </Route>
+                </Routes>
+                </RoomContextProvider>
             </AuthContextprovider>
 
         </div>

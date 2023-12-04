@@ -1,5 +1,4 @@
 import {FormEvent, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {UseRoom} from "../context/RoomsProvider.tsx";
 
 interface NewRoomModalProps{
@@ -12,12 +11,10 @@ export function JoinRoomModal({onDisMiss}:NewRoomModalProps){
     const { joinGroup } = UseRoom()
 
     //console.log(id)
-    const navigate = useNavigate();
     function HandleJoin(e : FormEvent<HTMLFormElement>){
         e.preventDefault();
         try{
             if(value){
-                navigate(`chat/${value}`)
                 joinGroup(value)
             }
             onDisMiss()
@@ -29,17 +26,17 @@ export function JoinRoomModal({onDisMiss}:NewRoomModalProps){
 
     return(
         <>
-            <dialog open className="modal modal-middle ">
-                <div className="modal-box flex justify-center align-middle flex-col">
-                <div className="modal-box">
+            <dialog open className="modal modal-middle  ">
+                <div className="modal-box shadow-sm flex bg-gray-700 justify-center items-center flex-col">
+                <div >
                     <div className="modal-action">
                         <form method="dialog">
                             <button onClick={onDisMiss} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">X</button>
                         </form>
                     </div>
-                    <span className="font-bold text-md">Join Id</span>
+                    <span className="font-bold text-lg">Join Id</span>
                 </div>
-                <div className="modal-box my-5">
+                <div className="modal-box bg-base-100/75 my-5">
                     <form onSubmit={HandleJoin}>
                         <input type="text" onChange={(e)=>setValue(e.target.value)} value={value} className="input text-black w-full bg-gray-300 my-5" />
                          <button type="submit" className="btn w-full ">Add</button>
