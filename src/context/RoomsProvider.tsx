@@ -31,7 +31,8 @@ type chatContextProps ={
     deleteGroup : (id: string) => void
     message : DocumentData[] |  ChatMember[]
     setChatRoom : Dispatch<SetStateAction<string>>,
-    chatRoom :string
+    chatRoom :string,
+    leaveGroup : (id :string) => void
 }
 
 const roomContext = createContext({} as chatContextProps)
@@ -74,7 +75,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }
 
     useEffect(() => {
-        console.log(roomId)
         const chatCollectionRef = query(
             collection(db,"message", `${roomId}`, "messages"),
             orderBy("createdAt"),
@@ -85,7 +85,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                 messages.push({...doc.data()})
             ))
             setMessage(messages);
-            console.log("message",messages)
         })
         return unsubscribe
     }, [roomId]);
@@ -99,7 +98,6 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                ))
 
             setRoom(group);
-            console.log(group)
            })
         })
         return unsubscribe;
@@ -112,9 +110,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
 
     async function deleteGroup(id:string){
         try {
-            //const users = collection(db, "users")
             await deleteDoc(doc(db, "group",`${id}`))
-            //await deleteField(doc(db, "message",`${id}`, "messages"))
             const messages = collection(db, "message" , `${id}`, "messages")
             getDocs(messages).then(docs=>docs.docs.map(document=>deleteDoc(doc(db,"message",`${id}`,"messages",`${document.id}`))))
             await deleteDoc(doc(db, "message",`${id}`))
@@ -123,13 +119,20 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
             docsnap.then(docs=>docs.docs.map(document=>
                 deleteDoc(doc(db,"users", `${document.id}`, "LoggedIn" , `${id}`))
             ))
+            setChatRoom("")
         }catch (err){
             console.log(err)
         }
     }
 
+    async function leaveGroup(id : string){
+        await deleteDoc(doc(db,"users", `${currentUser?.uid}`, "LoggedIn" , `${id}`))
+        setChatRoom("")
+        setMessage([])
+    }
+
     useEffect(() => {
-        async function joinUser() {
+        (async() => {
             try{
                 const docRef = doc(db, "users",`${currentUser?.uid}`)
                 const docSnap = await getDoc(docRef)
@@ -142,12 +145,12 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
             }catch (err){
                 console.log(err)
             }
-        }
-        joinUser()
+        })()
     }, [(currentUser?.email)]);
 
+
     return(
-        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message, setChatRoom, chatRoom}}>
+        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message, setChatRoom, chatRoom, leaveGroup}}>
             {children}
         </roomContext.Provider>
     )
