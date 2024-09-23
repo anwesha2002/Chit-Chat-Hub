@@ -13,6 +13,7 @@ export function Room({id , room_name, createdBy} : RoomType | DocumentData){
     }
 
     function handleRoomClick(id : string){
+        console.log(room_name + ": " + id)
         setRoomId(id)
         setChatRoom(room_name)
     }

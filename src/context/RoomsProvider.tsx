@@ -32,7 +32,8 @@ type chatContextProps ={
     message : DocumentData[] |  ChatMember[]
     setChatRoom : Dispatch<SetStateAction<string>>,
     chatRoom :string,
-    leaveGroup : (id :string) => void
+    leaveGroup : (id :string) => void,
+    setMessage :  Dispatch<SetStateAction<DocumentData[] | ChatMember[]>>
 }
 
 const roomContext = createContext({} as chatContextProps)
@@ -53,6 +54,8 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     const [message, setMessage] = useState<DocumentData[] |  ChatMember[]>([])
     const [chatRoom , setChatRoom] = useState("")
 
+    const user  =  localStorage.getItem("currentuser")
+
 
     //const [group, setGroup] = useState(false)
     async function createRoom(roomName : string){
@@ -65,6 +68,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
                     //setId(docRef.id);
                     setDoc(doc(db,"message",`${docRef.id}`),{})
                     joinGroup(docRef.id)
+                    setChatRoom(roomName)
                 })
             }
         } catch (err) {
@@ -75,6 +79,8 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
     }
 
     useEffect(() => {
+        if(!roomId) return
+
         const chatCollectionRef = query(
             collection(db,"message", `${roomId}`, "messages"),
             orderBy("createdAt"),
@@ -84,10 +90,77 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
             querySnapshot.docs.map((doc)=>(
                 messages.push({...doc.data()})
             ))
-            setMessage(messages);
+
+            // setMessage((prevmesg)=>{
+            //     const updatedMessages = messages;
+            //     console.log('Previous Messages:', prevmesg);
+            //     console.log('New Messages:', messages);
+            //     return updatedMessages
+            // });
+
+            setMessage(messages)
+            // console.log(messages)
         })
         return unsubscribe
-    }, [roomId]);
+    }, [roomId, currentUser?.uid]);
+
+
+    useEffect ( () => {
+        setMessage([])
+        setChatRoom("")
+        setRoomName("")
+        setRoomId("roomId")
+    } , [user] );
+
+
+    // useEffect(() => {
+    //     if(!roomId) return
+    //
+    //     const fetchMessages = async () => {
+    //         try {
+    //             const chatCollectionRef = query(
+    //                 collection(db,"message", `${roomId}`, "messages"),
+    //                 orderBy("createdAt"),
+    //             );
+    //
+    //             const unsubscribe = onSnapshot(chatCollectionRef, async (querySnapshot) => {
+    //                 const messages: DocumentData[] = [];
+    //
+    //                 // This can be asynchronous if you want to perform any async tasks like mapping over docs or fetching additional data
+    //
+    //                     querySnapshot.docs.map( (doc) => {
+    //                         messages.push({ ...doc.data() });
+    //                     })
+    //
+    //
+    //                 setMessage((prevMessages) => {
+    //                     console.log('Previous Messages:', prevMessages);
+    //                     console.log('New Messages:', messages);
+    //                     const updatedMessages = [...messages];
+    //                     return updatedMessages;
+    //                 });
+    //                 console.log('Messages after update:', messages);
+    //             });
+    //             return unsubscribe;
+    //         }catch (error){
+    //             console.error("Error fetching messages:", error);
+    //         }
+    //     }
+    //
+    //     fetchMessages()
+    //
+    //     return () => {
+    //         // Unsubscribe when the component unmounts or roomId changes
+    //         fetchMessages().then(unsubscribe => {
+    //             if (unsubscribe) unsubscribe();
+    //         });
+    //     };
+    // }, [roomId, currentUser?.uid]);
+
+
+
+
+
 
     useEffect(() => {
         const unsubscribe = onSnapshot(groupCollectionRef,(querySnapShot) => {
@@ -101,7 +174,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
            })
         })
         return unsubscribe;
-    }, []);
+    }, [currentUser?.uid]);
 
     async function joinGroup(id : string){
         await setDoc(doc(db, "users" , `${currentUser?.uid}` , "LoggedIn" , `${id}` ), {})
@@ -150,7 +223,7 @@ export function RoomContextProvider({children} : roomContextRroviderPros){
 
 
     return(
-        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message, setChatRoom, chatRoom, leaveGroup}}>
+        <roomContext.Provider value={{createRoom, roomName, setRoomName, setRoomId, roomId, joinGroup, room, deleteGroup, message, setChatRoom, chatRoom, leaveGroup, setMessage}}>
             {children}
         </roomContext.Provider>
     )

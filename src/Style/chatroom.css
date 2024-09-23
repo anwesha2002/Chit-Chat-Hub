@@ -1,0 +1,24 @@
+.chatroom{
+
+}
+
+@media (max-width: 1224px) {
+    .chatroom{
+        top : 0;
+        position: fixed;
+        right: 0;
+        width: 67%;
+    }
+    /*.chatbox{*/
+    /*    height: 72vh;*/
+    /*}*/
+}
+
+@media (max-width: 770px){
+    .chatroom{
+        top : 0;
+        position: fixed;
+        width: 100%;
+    }
+
+}

@@ -4,6 +4,7 @@ import User = firebase.User;
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {auth} from "../firebase.ts";
 import {ChatMember} from "../model/ChatMember.ts";
+import UserCredential = firebase.auth.UserCredential;
 
 type ChatContextproviderProps ={
     children : ReactNode
@@ -17,7 +18,7 @@ type ChatContextproviderProps ={
 
 type chatContextProps = {
     currentUser: ChatMember | User | null,
-    signInWithGoogle: () => Promise<void>
+    signInWithGoogle: () => Promise<UserCredential>
     signOut : () => Promise<void>
 }
 
@@ -30,9 +31,9 @@ export function UseChat(){
 export function AuthContextprovider({children} : ChatContextproviderProps){
     const [currentUser, setCurrentUser] = useState<ChatMember | User | null >(null)
     const [loading, setLoading] = useState(true)
-    function signInWithGoogle(){
+    function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
-        return auth.signInWithRedirect(provider)
+        return auth.signInWithPopup(provider)
     }
 
     function signOut(){
@@ -43,13 +44,15 @@ export function AuthContextprovider({children} : ChatContextproviderProps){
     useEffect(()=>{
         const unsubscribe = auth.onAuthStateChanged(  (firebaseUser   )     => {
             setCurrentUser(firebaseUser);
+            localStorage.setItem("currentuser" , JSON.stringify(firebaseUser))
             setLoading(false);
-
+            // setChatRoom("")
+            // setMessage([])
         })
         return ()=>{
             unsubscribe();
         }
-    },[])
+    },[currentUser])
 
     return(
         <authContext.Provider value={{currentUser, signInWithGoogle, signOut}}>

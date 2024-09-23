@@ -21,15 +21,30 @@ export function SendMessage(){
     return(
         <>
             {chatRoom&&
-                <div className="bg-gray-500 rounded-l-lg fixed bottom-0 w-2/3 px-10 py-5 shadow-sm flex justify-center">
-                    <form onSubmit={handleSubmit} className="container flex justify-around">
-                        <input value={value} onChange={e => setValue(e.target.value)} className="input w-full focus:outline-none  rounded-r-none" type="text"/>
+                <div className="bg-gray-500 rounded-l-lg w-full   px-10 py-5 shadow-sm flex " >
+                    <form onSubmit={handleSubmit} className="container flex w-full">
+                        <input value={value} onChange={e => setValue(e.target.value)} className="input  focus:outline-none w-full rounded-r-none"  type="text"/>
                         <button type="submit" className="bg-gray-200 w-auto rounded-r-lg text-black flex flex-row justify-center items-center">
                             <IoSend className="mx-5 text-xl"/>
                         </button>
                     </form>
                 </div>
             }
+
+            {/*{chatRoom&&*/}
+            {/*    <div className=" bg-gray-500 rounded-l-lg  w-full  ">*/}
+            {/*        <form onSubmit={handleSubmit} className="container flex w-full">*/}
+            {/*            <input value={value} onChange={e => setValue(e.target.value)} className="input  focus:outline-none w-full rounded-r-none"  type="text"/>*/}
+            {/*            <button type="submit" className="bg-gray-200 w-auto rounded-r-lg text-black flex flex-row justify-center items-center">*/}
+            {/*                <IoSend className="mx-5 text-xl"/>*/}
+            {/*            </button>*/}
+            {/*        </form>*/}
+            {/*    </div>*/}
+            {/*}*/}
+
+
+
+
         </>
     )
 }

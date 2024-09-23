@@ -5,12 +5,17 @@ import {UseRoom} from "../context/RoomsProvider.tsx";
 
 
 export function ChatBox(){
-    const { message } = UseRoom()
+    const { message, setMessage } = UseRoom()
     const messageRef  = useRef<HTMLDivElement>(null)
-
+    const user  =  localStorage.getItem("currentuser")
     const scrollToBottom = () => {
         messageRef.current?.scrollIntoView({behavior : "smooth"})
     }
+
+
+    useEffect ( () => {
+        setMessage([])
+    } , [user] );
 
     useEffect(() => {
         scrollToBottom()
@@ -18,7 +23,7 @@ export function ChatBox(){
 
     return(
         <>
-            <div className="mb-28 ">
+            <div >
                 {message.map(message=>(
                     <Message  key={message.id} message={message}/>
                 ))}

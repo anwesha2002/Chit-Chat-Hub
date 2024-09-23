@@ -1,6 +1,5 @@
 import {UseChat} from "../context/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
-import {useEffect} from "react";
 import wallpaper from  '../assets/wallpaper1.jpg';
 import chatbot from  '../assets/chatbot.jpg';
 import createGroup from  '../assets/createGroup.jpg';
@@ -13,16 +12,17 @@ export function Login(){
     async function handleSignIn(){
         try {
             await signInWithGoogle()
+            navigate("/home")
         }catch (err){
             console.log(err)
         }
     }
 
-    useEffect(() => {
-        if(currentUser){
-            navigate("/home")
-        }
-    }, [currentUser]);
+    // useEffect(() => {
+    //     if(currentUser){
+    //
+    //     }
+    // }, [currentUser]);
 
     console.log(currentUser)
     return(
