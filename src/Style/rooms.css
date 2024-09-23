@@ -3,7 +3,7 @@
     height: 100vh;
     overflow-y: scroll;
     scrollbar-width: none;
-    &::-webkit-scrollbar{
+    ::-webkit-scrollbar{
         width: 0;
     }
     z-index: 9;
