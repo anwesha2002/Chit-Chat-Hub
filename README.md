@@ -7,7 +7,7 @@ Welcome to Chit-Chat-Hub, a feature-rich chatting application that provides a se
 
 ## 🚀 Live Demo
 
-Experience the project live: [Chit-Chat-Hub](https://youtube-clone-anwesha2002s-projects.vercel.app/)
+Experience the project live: [Chit-Chat-Hub](https://chit-chat-hub-anwesha2002s-projects.vercel.app/)
 
 
 ## 🌟 Features
@@ -78,10 +78,12 @@ To get started with Chit-Chat-Hub, follow these simple steps:
 ```plaintext
 src/
 ├── components/        # Reusable React components
-├── styles/            # Tailwind css
-├── pages/             # Common route pages
-├── data/              # API service functions
-└── styles/            # React-Bootstrap and SCSS files
+├── style/             # Tailwind css
+├── pages/             # Application pages
+├── Util/              # Utility functions
+├── model/             # Data models
+└── context/           # Reusabe state context
+
 
 
 
