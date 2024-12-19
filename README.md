@@ -55,8 +55,11 @@ To get started with Chit-Chat-Hub, follow these simple steps:
    npm install
 
 3. Set up environment variables:
+
+   ```bash
+    REACT_APP_FIREBASE_API_KEY=FIREBASE_API_KEY
    
-4. Start the development server:
+5. Start the development server:
    
    ```bash
    npm run dev
